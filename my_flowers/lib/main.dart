@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loading_animations/loading_animations.dart';
+
+import 'menu.dart';
 // void main() => runApp(MaterialApp(
 //       home: MyFlowers(),
 //     ));
@@ -12,14 +14,12 @@ void main() async {
   runApp(MaterialApp(
     title: "My Flowers",
     theme: ThemeData(
-
       brightness: Brightness.dark,
       primaryColor: Colors.amber.shade500,
       accentColor: Colors.amber.shade700,
-
       fontFamily: 'Georgia',
-  ),
-    home: MyFlowers(),
+    ),
+    home: Menu(),
   ));
 }
 
@@ -40,7 +40,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.6;
     return Scaffold(
-        backgroundColor: Colors.amber.shade50,      
+        backgroundColor: Colors.amber.shade50,
         appBar: AppBar(
           title: Text("My Flowers"),
           backgroundColor: Colors.amber.shade400,
@@ -48,12 +48,11 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("flowers").snapshots(),
           builder: (context, snapshot) {
-            
             if (snapshot.hasError) {
               return Center(
                   child: Text(
-                  "Somethin went wrong.",
-                  style: TextStyle(fontSize: 20.0),
+                "Somethin went wrong.",
+                style: TextStyle(fontSize: 20.0),
               ));
             }
 
@@ -67,22 +66,23 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
               );
             }
 
-            if ((snapshot.data! as QuerySnapshot).docs.length == 0) {
+            if ((snapshot.data as QuerySnapshot).docs.length == 0) {
               return Center(
                   child: Text(
-                    "No flowers are available.",
-                    style: TextStyle(fontSize: 20.0),
+                "No flowers are available.",
+                style: TextStyle(fontSize: 20.0),
               ));
             } else {
               return ListView.builder(
-                itemCount: (snapshot.data! as QuerySnapshot).docs.length,
+                itemCount: (snapshot.data as QuerySnapshot).docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot flower =
-                      (snapshot.data! as QuerySnapshot).docs[index];
+                      (snapshot.data as QuerySnapshot).docs[index];
                   return GestureDetector(
                     onTap: () {},
                     child: Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 6),
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -90,11 +90,10 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
                             height: 100,
                             // child: Image.network(flower['img']),
                             decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(flower['img']),
-                              )
-                            ),
+                                image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(flower['img']),
+                            )),
                           ),
                           Padding(
                               padding: const EdgeInsets.all(10.0),
@@ -106,20 +105,16 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
                                     style: TextStyle(
                                         fontSize: 25,
                                         color: Colors.amber.shade700,
-                                        fontWeight: FontWeight.bold
-                                    ),
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 10),
                                   Container(
-                                    width: width,
-                                    child: Text(
-                                      flower['description'],
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.grey
-                                      ),
-                                    )
-                                  )
+                                      width: width,
+                                      child: Text(
+                                        flower['description'],
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.grey),
+                                      ))
                                 ],
                               ))
                         ],

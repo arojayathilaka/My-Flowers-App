@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loading_animations/loading_animations.dart';
-// void main() => runApp(MaterialApp(
-//       home: MyFlowers(),
-//     ));
+import './DetailScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +26,7 @@ class MyFlowers extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _MyFlowers();
   }
+  
 }
 
 class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
@@ -67,7 +66,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
               );
             }
 
-            if ((snapshot.data! as QuerySnapshot).docs.length == 0) {
+            if ((snapshot.data as QuerySnapshot).docs.length == 0) {
               return Center(
                   child: Text(
                     "No flowers are available.",
@@ -75,12 +74,20 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
               ));
             } else {
               return ListView.builder(
-                itemCount: (snapshot.data! as QuerySnapshot).docs.length,
+                itemCount: (snapshot.data as QuerySnapshot).docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot flower =
-                      (snapshot.data! as QuerySnapshot).docs[index];
+                      (snapshot.data as QuerySnapshot).docs[index];
+                  //print(flower);
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => DetailScreen(flowerName: flower['name'], flowerDes: flower['description'], flowerID: flower.id, flowerImage: flower['img']),
+                  ),
+                );
+                    },
                     child: Card(
                       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                       child: Row(
@@ -133,25 +140,3 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
         ));
   }
 }
-
-// final spinkit = SpinKitSquareCircle(
-//   color: Colors.white,
-//   size: 50.0,
-//   controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
-// );
-
-// return Center(child: const SpinKitFadingCube(
-//                 color: Colors.amber,
-//                 duration: const Duration(milliseconds: 10000),
-//                 )
-//               );
-
-// return SpinKitFadingCube(
-//   color: Colors.amber,
-// );
-
-// DocumentSnapshot flower = (snapshot.data! as QuerySnapshot).docs[index];
-//                   return ListTile(
-//                       leading: Image.network(flower['img']),
-//                       title: Text(flower['name']),
-//                       subtitle: Text(flower['description']));

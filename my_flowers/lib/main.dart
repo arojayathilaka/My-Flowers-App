@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loading_animations/loading_animations.dart';
-import './DetailScreen.dart';
+import 'flowerDetails.dart';
+// void main() => runApp(MaterialApp(
+//       home: MyFlowers(),
+//     ));
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +43,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.6;
     return Scaffold(
-        backgroundColor: Colors.amber.shade50,      
+        backgroundColor: Colors.amber.shade50,
         appBar: AppBar(
           title: Text("My Flowers"),
           backgroundColor: Colors.amber.shade400,
@@ -47,7 +51,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("flowers").snapshots(),
           builder: (context, snapshot) {
-            
+
             if (snapshot.hasError) {
               return Center(
                   child: Text(
@@ -78,15 +82,11 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
                 itemBuilder: (context, index) {
                   DocumentSnapshot flower =
                       (snapshot.data as QuerySnapshot).docs[index];
-                  //print(flower);
+                  var id = flower.id;
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                      builder: (context) => DetailScreen(flowerName: flower['name'], flowerDes: flower['description'], flowerID: flower.id, flowerImage: flower['img']),
-                  ),
-                );
+                      showFlowerDetailsPopup(context,flower['name'],flower['img'],flower['description'],id);
+
                     },
                     child: Card(
                       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
@@ -140,3 +140,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
         ));
   }
 }
+
+
+
+

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'flowerDetails.dart';
 
 import 'menu.dart';
 // void main() => runApp(MaterialApp(
@@ -48,6 +49,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("flowers").snapshots(),
           builder: (context, snapshot) {
+
             if (snapshot.hasError) {
               return Center(
                   child: Text(
@@ -78,8 +80,12 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
                 itemBuilder: (context, index) {
                   DocumentSnapshot flower =
                       (snapshot.data as QuerySnapshot).docs[index];
+                  var id = flower.id;
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showFlowerDetailsPopup(context,flower['name'],flower['img'],flower['description'],id);
+
+                    },
                     child: Card(
                       margin: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 6),

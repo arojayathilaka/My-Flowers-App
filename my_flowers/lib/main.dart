@@ -29,6 +29,7 @@ class MyFlowers extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _MyFlowers();
   }
+  
 }
 
 class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
@@ -135,24 +136,6 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
   }
 }
 
-// final spinkit = SpinKitSquareCircle(
-//   color: Colors.white,
-//   size: 50.0,
-//   controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
-// );
 
-// return Center(child: const SpinKitFadingCube(
-//                 color: Colors.amber,
-//                 duration: const Duration(milliseconds: 10000),
-//                 )
-//               );
 
-// return SpinKitFadingCube(
-//   color: Colors.amber,
-// );
 
-// DocumentSnapshot flower = (snapshot.data! as QuerySnapshot).docs[index];
-//                   return ListTile(
-//                       leading: Image.network(flower['img']),
-//                       title: Text(flower['name']),
-//                       subtitle: Text(flower['description']));

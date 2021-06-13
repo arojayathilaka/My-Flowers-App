@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'flowerDetails.dart';
-
-import 'menu.dart';
+import 'package:my_flowers/camera.dart';
 // void main() => runApp(MaterialApp(
 //       home: MyFlowers(),
 //     ));
@@ -20,7 +19,7 @@ void main() async {
       accentColor: Colors.amber.shade700,
       fontFamily: 'Georgia',
     ),
-    home: Menu(),
+    home: MyFlowers(),
   ));
 }
 
@@ -29,11 +28,10 @@ class MyFlowers extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _MyFlowers();
   }
-  
 }
 
 class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
-  // @override
+  @override
   void initState() {
     super.initState();
   }
@@ -54,7 +52,7 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
             if (snapshot.hasError) {
               return Center(
                   child: Text(
-                "Somethin went wrong.",
+                "Something went wrong.",
                 style: TextStyle(fontSize: 20.0),
               ));
             }
@@ -132,7 +130,16 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
               );
             }
           },
-        ));
+        ),
+        floatingActionButton: FloatingActionButton(
+        onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Camera()));
+              },
+        tooltip: 'Add',
+        child: Icon(Icons.add),
+      ), 
+    );
   }
 }
 

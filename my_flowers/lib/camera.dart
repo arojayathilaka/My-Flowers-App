@@ -20,7 +20,7 @@ class _State extends State<Camera> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Upload Image')),
+      appBar: AppBar(title: Text('Add Flower')),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -59,7 +59,10 @@ class _State extends State<Camera> {
               controller: _descriptionController,
             ),
             ElevatedButton(
-              child: Text('Submit'),
+              child: Text('Add'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.amber.shade700,
+              ),
               onPressed: () {
                 uploadImageToStorage(file);
               },

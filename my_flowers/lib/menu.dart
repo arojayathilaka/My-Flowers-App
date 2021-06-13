@@ -14,7 +14,7 @@ class MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: AppBar(
-          title: Text('FLower App'),
+          title: Text('Flower App'),
         ),
         body: Center(
             child: Column(children: <Widget>[

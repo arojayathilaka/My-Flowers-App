@@ -4,9 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'flowerDetails.dart';
 import 'package:my_flowers/camera.dart';
-// void main() => runApp(MaterialApp(
-//       home: MyFlowers(),
-//     ));
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,9 +69,9 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
               return Center(
                   child: Text(
                 "No flowers are available.",
-                style: TextStyle(fontSize: 20.0),
+                style: TextStyle(fontSize: 20.0, color: Colors.amber),
               ));
-            } else {
+             } else {
               return ListView.builder(
                 itemCount: (snapshot.data as QuerySnapshot).docs.length,
                 itemBuilder: (context, index) {
@@ -127,8 +125,8 @@ class _MyFlowers extends State<MyFlowers> with TickerProviderStateMixin {
                     ),
                   );
                 },
-              );
-            }
+             );
+           }
           },
         ),
         floatingActionButton: FloatingActionButton(

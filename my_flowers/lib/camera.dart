@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -26,8 +27,15 @@ class _State extends State<Camera> {
           children: <Widget>[
             (imageUrl != null)
                 ? Image.file(imageUrl)
-                : Placeholder(
-                    fallbackHeight: 200.0, fallbackWidth: double.infinity),
+                : Container(
+                    width: 300,
+                    height: 300,
+                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 2.0, color: Colors.yellow[800]),
+                    ),
+                  ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
@@ -51,6 +59,9 @@ class _State extends State<Camera> {
               ),
               controller: _nameController,
             ),
+            SizedBox(
+              height: 20.0,
+            ),
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -58,10 +69,14 @@ class _State extends State<Camera> {
               ),
               controller: _descriptionController,
             ),
+            SizedBox(
+              height: 20.0,
+            ),
             ElevatedButton(
               child: Text('Add'),
               style: ElevatedButton.styleFrom(
                 primary: Colors.amber.shade700,
+                
               ),
               onPressed: () {
                 uploadImageToStorage(file);
@@ -113,7 +128,9 @@ class _State extends State<Camera> {
         .then((downloadUrl) => uploadToFirestore(downloadUrl));
   }
 
-  uploadToFirestore(String imageUrl, ) {
+  uploadToFirestore(
+    String imageUrl,
+  ) {
     print(imageUrl);
 
     var myFlower = {
@@ -125,7 +142,15 @@ class _State extends State<Camera> {
     var collection = FirebaseFirestore.instance.collection('flowers');
     collection.add(myFlower) // <-- Your data
         .then((_) {
-// Navigate
+    // Navigate or taost
+    Fluttertoast.showToast(
+      msg: " flower Added!",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      //backgroundColor: Colors.red[100],
+      textColor: Colors.grey[100],
+      fontSize: 16.0); 
     }).catchError((error) => print('Add failed: $error'));
   }
 }
